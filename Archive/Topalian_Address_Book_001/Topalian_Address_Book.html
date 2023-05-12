@@ -1,0 +1,326 @@
+<!-- Dedicated to God the Father -->
+
+<!-- All Rights Reserved Christopher Topalian Copyright 2000-2023 -->
+
+<!-- https://github.com/ChristopherTopalian -->
+
+<!-- Topalian_Address_Book.html -->
+
+<html>
+<head>
+<title> Topalian Address Book </title>
+
+<link rel = "stylesheet" href = "css/style001.css">
+
+<script src = "data/info.js"></script>
+
+<script>
+
+function showData(whichArray, whichLocation)
+{
+    let theText = "";
+
+    theText += "<textarea id = 'theTextId' style = 'width: 98%; height: 65%; padding-left: 20px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; background-color: rgb(40, 40, 40); font-size: 20px; color: rgb(255, 255, 255);'>";
+
+    theText  += "info = [\n{ ";
+
+    for (let x = 0; x < whichArray.length; x++)
+    {
+        theText += "\n";
+        theText += "\"name\":" + '\"' + whichArray[x].name+'\",';
+
+        theText += '\n';
+        theText += "\"phoneCell\":" + '\"' + whichArray[x].phoneCell+'\",';
+
+        theText += '\n';
+        theText += "\"address\":" + '\"' + whichArray[x].address+'\",';
+
+        theText += '\n';
+        theText += "\"city\":" + '\"' + whichArray[x].city+'\",';
+
+        theText += '\n';
+        theText += "\"state\":" + '\"' + whichArray[x].state+'\",';
+
+        theText += '\n';
+        theText += "\"category\":" + '\"' + whichArray[x].category+'\",';
+
+        theText += '\n';
+        theText += "\"rating\":" + '\"' + Number(whichArray[x].rating)+'\",';
+
+        theText += '\n';
+        theText += "\"date\":" + '\"' + whichArray[x].date+'\",';
+
+        if (x < whichArray.length - 1)
+        {
+            theText += '\n},\n{';
+        }
+    }
+
+    if (whichLocation == "window")
+    {
+        theText += '\n} \n];';
+
+        let reportWindow = window.open("", "Report Window", "left = 10 top = 10, width = 1200, height = 700", true);
+
+        reportWindow.document.open();
+
+        reportWindow.document.write(theText);
+
+        reportWindow.document.body.style.background = "rgb(40, 40, 40)";
+
+        reportWindow.document.close();
+    }
+
+    else if (whichLocation == "page")
+    {
+        theText += '\n} \n];';
+
+        document.getElementById("theData").innerHTML = theText;
+    }
+}
+
+function downloadText()
+{
+    let theContent = document.getElementById("theTextId").value;
+
+    let dataString = "data:text/json;charset=utf-8," + encodeURIComponent(theContent);
+
+    let downloadAnchor = document.getElementById("theDownloadAnchor");
+
+    downloadAnchor.setAttribute("href", dataString);
+
+    downloadAnchor.setAttribute("download", "info.js");
+
+    downloadAnchor.click();
+}
+
+function sortByDate(whichArray, whichDirection)
+{
+    // ascending
+    if (whichDirection == "up")
+    {
+        whichArray.sort(function(a, b)
+        {
+            return new Date(a.date) - new Date(b.date);
+        });
+    }
+
+    // descending
+    else if (whichDirection == "down")
+    {
+        whichArray.sort(function(b, a)
+        {
+            return new Date(a.date) - new Date(b.date);
+        });
+    }
+}
+
+function sortByRating(whichArray, whichDirection)
+{
+    // ascending
+    if (whichDirection == "up")
+    {
+        whichArray.sort(function(a, b)
+        {
+            return parseFloat(a.rating) - parseFloat(b.rating);
+        });
+    }
+
+    // descending
+    else if (whichDirection == "down")
+    {
+        whichArray.sort(function(b, a)
+        {
+            return parseFloat(a.rating) - parseFloat(b.rating);
+        });
+    }
+}
+
+function sortByName(whichArray, whichDirection)
+{
+    // ascending
+    if (whichDirection == "up")
+    {
+        whichArray.sort(function(a, b)
+        {
+            return a.name.localeCompare(b.name);
+        });
+    }
+
+    // descending
+    else if (whichDirection == "down")
+    {
+        whichArray.sort(function(b, a)
+        {
+            return a.name.localeCompare(b.name);
+        });
+    }
+}
+
+function sortByNameAndCategory(whichArray, whichDirection)
+{
+    // ascending
+    if (whichDirection == "up")
+    {
+        whichArray.sort(function(a, b)
+        {
+            return a.name.localeCompare(b.name);
+        });
+        whichArray.sort(function(a, b)
+        {
+            return a.category.localeCompare(b.category);
+        });
+    }
+
+    // descending
+    else if (whichDirection == "down")
+    {
+        whichArray.sort(function(b, a)
+        {
+            return a.name.localeCompare(b.name);
+        });
+
+        whichArray.sort(function(b, a)
+        {
+            return a.category.localeCompare(b.category);
+        });
+    }
+}
+
+function sortByCity(whichArray, whichDirection)
+{
+    // ascending
+    if (whichDirection == "up")
+    {
+        whichArray.sort(function(a, b)
+        {
+            return a.city.localeCompare(b.city);
+        });
+    }
+
+    // descending
+    else if (whichDirection == "down")
+    {
+        whichArray.sort(function(b, a)
+        {
+            return a.city.localeCompare(b.city);
+        });
+    }
+}
+
+function sortByState(whichArray, whichDirection)
+{
+    // ascending
+    if (whichDirection == "up")
+    {
+        whichArray.sort(function(a, b)
+        {
+            return a.state.localeCompare(b.state);
+        });
+    }
+
+    // descending
+    else if (whichDirection == "down")
+    {
+        whichArray.sort(function(b, a)
+        {
+            return a.state.localeCompare(b.state);
+        });
+    }
+}
+
+function sortByCityAndState(whichArray, whichDirection)
+{
+    // ascending
+    if (whichDirection == "up")
+    {
+        whichArray.sort(function(a, b)
+        {
+            return a.city.localeCompare(b.city);
+        });
+        whichArray.sort(function(a, b)
+        {
+            return a.state.localeCompare(b.state);
+        });
+    }
+
+    // descending
+    else if (whichDirection == "down")
+    {
+        whichArray.sort(function(b, a)
+        {
+            return a.city.localeCompare(b.city);
+        });
+
+        whichArray.sort(function(b, a)
+        {
+            return a.state.localeCompare(b.state);
+        });
+    }
+}
+
+function reverseArray(whichArray)
+{
+    whichArray.reverse();
+}
+
+function stringifyIt(whichArray, whichId)
+{
+    document.getElementById(whichId).innerHTML = JSON.stringify(whichArray);
+}
+
+</script>
+
+</head>
+
+<body onload = "showData(info, 'page');"></body>
+
+<hr>
+<center>
+<div class = "textTitle">
+TOPALIAN ADDRESS BOOK
+</div>
+</center>
+<hr>
+
+<center>
+
+Sort By:
+<button onclick = "sortByName(info, 'up'); showData(info, 'page');" class = "buttonMenu"> Name </button>
+
+<button onclick = "sortByNameAndCategory(info, 'up'); showData(info, 'page');" class = "buttonMenu"> Name & Category </button>
+
+<button onclick = "sortByRating(info, 'up'); showData(info, 'page');" class = "buttonMenu"> Rating </button>
+
+<button onclick = "sortByDate(info, 'up'); showData(info, 'page');" class = "buttonMenu"> Date </button>
+
+<button onclick = "sortByCity(info, 'up'); showData(info, 'page');" class = "buttonMenu"> City </button>
+
+<button onclick = "sortByState(info, 'up'); showData(info, 'page');" class = "buttonMenu"> State </button>
+
+<button onclick = "sortByCityAndState(info, 'up'); showData(info, 'page');" class = "buttonMenu"> City & State </button>
+
+<hr>
+
+<button onclick = "reverseArray(info); showData(info, 'page');" class = "buttonMenu"> Reverse </button>
+
+<hr>
+
+<button onclick = "downloadText();" class = "buttonMenu"> Download </button>
+
+<button onclick = "showData(info, 'window');" class = "buttonMenu"> Report in Window </button>
+
+<button onclick = "stringifyIt(info, 'theTextId');" class = "buttonMenu"> JSON.stringify </button>
+<hr>
+
+<div id = "theData"></div>
+
+<hr>
+
+<a id = "theDownloadAnchor" style = "display: none"></a>
+
+</center>
+
+</body>
+
+</html>
